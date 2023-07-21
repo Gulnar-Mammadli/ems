@@ -1,6 +1,7 @@
 package com.mammadli.ems.service;
 
 import com.mammadli.ems.dto.EmployeeDto;
+import com.mammadli.ems.exception.CustomException;
 import com.mammadli.ems.mapper.EmployeeMapper;
 import com.mammadli.ems.model.Employee;
 import com.mammadli.ems.repository.EmployeeRepository;
@@ -21,7 +22,7 @@ public class EmployeeService {
     public EmployeeDto createEmployee(EmployeeDto dto) {
         Optional<Employee> response = employeeRepository.findByEmailAndActiveTrue(dto.getEmail());
         if(response.isPresent()){
-            throw new RuntimeException("Email already exists");
+            throw new CustomException("Email already exists");
         }
         Employee employee = employeeMapper.toEntity(dto);
         employee.setActive(true);
@@ -29,18 +30,18 @@ public class EmployeeService {
     }
 
     public EmployeeDto fetchById(Long id) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee#" + id + " not found"));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new CustomException("Employee#" + id + " not found"));
         return employeeMapper.toDto(employee);
     }
 
     public Long delete(Long id) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee#" + id + " not found"));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new CustomException("Employee#" + id + " not found"));
         employeeRepository.delete(employee);
         return id;
     }
 
     public EmployeeDto partialUpdate(EmployeeDto dto) {
-        Employee employee = employeeRepository.findById(dto.getId()).orElseThrow(() -> new RuntimeException("Employee#" + dto.getId() + " not found"));
+        Employee employee = employeeRepository.findById(dto.getId()).orElseThrow(() -> new CustomException("Employee#" + dto.getId() + " not found"));
         employeeMapper.partialUpdate(employee, dto);
         employee.setActive(true);
         Employee updated = employeeRepository.save(employee);
