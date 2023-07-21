@@ -17,10 +17,10 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Employee extends BaseEntity implements Serializable {
 
-    @NotNull
+    @Column(nullable = false)
     String firstName;
 
-    @NotNull
+    @Column(nullable = false)
     String lastName;
 
     @Column(name = "email", length = 254, unique = true, nullable = false)

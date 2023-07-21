@@ -1,5 +1,6 @@
 package com.mammadli.ems.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,8 +13,15 @@ import lombok.experimental.FieldDefaults;
 public class EmployeeDto {
 
     Long id;
+
+    @NotNull
     String firstName;
+
+    @NotNull
     String lastName;
+
+    @NotNull
     String email;
+
     boolean active;
 }

@@ -2,6 +2,7 @@ package com.mammadli.ems.controller;
 
 import com.mammadli.ems.dto.EmployeeDto;
 import com.mammadli.ems.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -16,7 +18,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto dto) {
+    public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto dto) {
         return ResponseEntity.ok().body(employeeService.createEmployee(dto));
     }
 
@@ -36,7 +38,7 @@ public class EmployeeController {
     }
 
     @PatchMapping
-    public ResponseEntity<EmployeeDto> partialUpdate(@RequestBody EmployeeDto dto){
+    public ResponseEntity<EmployeeDto> partialUpdate(@Valid @RequestBody EmployeeDto dto){
         return ResponseEntity.ok().body(employeeService.partialUpdate(dto));
     }
 }

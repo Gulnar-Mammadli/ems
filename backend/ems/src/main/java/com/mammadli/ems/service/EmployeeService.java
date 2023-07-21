@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,10 @@ public class EmployeeService {
 
 
     public EmployeeDto createEmployee(EmployeeDto dto) {
+        Optional<Employee> response = employeeRepository.findByEmailAndActiveTrue(dto.getEmail());
+        if(response.isPresent()){
+            throw new RuntimeException("Email already exists");
+        }
         Employee employee = employeeMapper.toEntity(dto);
         employee.setActive(true);
         return employeeMapper.toDto(employeeRepository.save(employee));
@@ -29,18 +34,17 @@ public class EmployeeService {
     }
 
     public Long delete(Long id) {
-        employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee#" + id + " not found"));
-        employeeRepository.deleteById(id);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee#" + id + " not found"));
+        employeeRepository.delete(employee);
         return id;
     }
 
     public EmployeeDto partialUpdate(EmployeeDto dto) {
         Employee employee = employeeRepository.findById(dto.getId()).orElseThrow(() -> new RuntimeException("Employee#" + dto.getId() + " not found"));
         employeeMapper.partialUpdate(employee, dto);
+        employee.setActive(true);
         Employee updated = employeeRepository.save(employee);
-        updated.setActive(true);
-        EmployeeDto employeeDto = employeeMapper.toDto(employee);
-        employeeDto.setActive(true);
+        EmployeeDto employeeDto = employeeMapper.toDto(updated);
         return employeeDto;
     }
 
