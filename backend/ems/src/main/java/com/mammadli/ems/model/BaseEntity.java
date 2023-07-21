@@ -1,30 +1,23 @@
 package com.mammadli.ems.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
-
-import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @MappedSuperclass
 @NoArgsConstructor
 @Data
-@SuperBuilder(toBuilder=true)
-@EqualsAndHashCode
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BaseEntity implements Serializable {
+public class BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "active",columnDefinition = "boolean default true")
+    @Column(name = "active", columnDefinition = "boolean default true")
     boolean active;
 }
