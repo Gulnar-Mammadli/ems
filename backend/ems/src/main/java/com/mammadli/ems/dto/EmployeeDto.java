@@ -24,4 +24,6 @@ public class EmployeeDto {
     String email;
 
     boolean active;
+    Long departmentId;
+    DepartmentDto department;
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.Set;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Department extends BaseEntity {
+public class Department extends BaseEntity implements Serializable {
 
     @Column(name = "department_name",nullable = false)
     String departmentName;

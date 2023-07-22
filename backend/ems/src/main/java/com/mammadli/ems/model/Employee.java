@@ -27,6 +27,6 @@ public class Employee extends BaseEntity implements Serializable {
     String email;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     Department department;
 }
