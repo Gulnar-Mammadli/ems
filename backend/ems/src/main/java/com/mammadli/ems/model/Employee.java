@@ -1,7 +1,6 @@
 package com.mammadli.ems.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -27,4 +26,7 @@ public class Employee extends BaseEntity implements Serializable {
     @EqualsAndHashCode.Include
     String email;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    Department department;
 }
